@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Vue.js起步-属性绑定</title>
+</head>
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>
+                属性绑定
+            </legend>
+            <!--属性绑定的第一种方法-->
+            <a v-bind:href="vueUrl" :title="helloTitle">{{helloTitle}}</a>
+            <!--属性绑定的第二种方法-->
+            <a :href="vueUrl" :title="helloTitle">{{helloTitle}}</a>
+        </fieldset>
+    </div>
+    <script>
+        const App={
+            data(){
+                return {
+                    helloTitle:"Hello Vue.js",
+                    vueUrl:"https://v3.vuejs.org/"
+                }
+            }
+        }
+        Vue.createApp(App).mount('#app');
+    </script>
+</body>
+</html>

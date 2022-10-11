@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Vue.js起步-修改数据</title>
+</head>
+<body>
+    <div id="app">
+      <fieldset>
+        <legend>方法</legend>
+        <!--绑定点击事件的方法1-->
+        <button v-on:click="add">Click Me</button> 
+        <!--绑定点击事件的方法2-->
+        <button @click="add">Click Me</button>
+        <span>{{counter}}</span>
+      </fieldset>
+    </div>
+    <script>
+        const App={
+            data(){
+                return {
+                    counter:0
+                }
+            },
+            methods:{
+                //与点击属性绑定的方法名相同
+                add(){
+                    this.counter++
+                }
+            }
+        }
+        Vue.createApp(App).mount('#app');
+    </script>
+</body>
+</html>
