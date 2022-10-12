@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Vue.js起步-自定义组件</title>
+</head>
+<body>
+    <div id="app">
+      <fieldset>
+          <legend>自定义组件</legend>
+          <!--以todo.id为key,todo为单个遍历元素，遍历数组items，并将todo遍历元素传给自定义组件属性todo-->
+          <todo-item v-for="todo in items" :todo="todo" :key="todo.id"></todo-item>
+
+      </fieldset>
+    </div>
+    <script>
+        const App={
+            data(){
+                return {
+                    items:[
+                        {id:0,text:'item0'},
+                        {id:1,text:'item1'},
+                        {id:2,text:'item2'}
+                    ]
+                }
+            }
+        }
+        const app=Vue.createApp(App);
+        //自定义组件
+        app.component('todo-item',{
+            //组件属性
+            props:['todo'],
+            //组件模板
+            template:'<div>{{todo.text}}</div>'
+        })
+        app.mount("#app");
+    </script>
+</body>
+</html>

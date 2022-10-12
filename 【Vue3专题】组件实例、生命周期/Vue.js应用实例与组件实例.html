@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Vue.js应用实例与组件实例</title>
+</head>
+<body>
+    <div id="app">
+      <fieldset>
+        <legend>组件实例</legend>
+        {{message}}
+        <button @click="change">Click</button>
+      </fieldset>
+    </div>
+    <script>
+        const App={
+            data(){
+                return{
+                    message:'HelloWorld'
+                }
+            },
+            methods:{
+                change(){
+                    //this代表的是Vue根组件，所以输出的是根组件实例
+                    console.log(this);
+                    //修改这个this等于修改根组件实例，而修改根组件实例，会让UI绑定的数据遭到修改，从而让UI内容发生变化
+                    this.message+='!'
+                }
+            },
+        }
+        const app=Vue.createApp(App);
+        //输出app应用实例，代表当前应用的信息，是独一无二的
+        console.log(app);
+        const vm=app.mount('#app');
+        //输出根组件实例，里面有很多组件信息
+        console.log(vm);
+        
+    </script>
+</body>
+</html>
