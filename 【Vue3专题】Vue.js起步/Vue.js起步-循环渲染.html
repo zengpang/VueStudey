@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Vue.js起步-循环渲染</title>
+</head>
+<body>
+    <div id="app">
+      <fieldset>
+        <legend>列表渲染</legend>
+        <ul>
+            <!--v-for属性为循环，格式为‘键 in 数组变量名’-->
+            <li v-for="key in helloitems">{{key}}</li>
+        </ul>
+        <button @click="add">Click</button>
+      </fieldset>
+   
+    </div>
+    <script>
+        const App={
+            data(){
+                return {
+                    helloitems:['helloitems0','helloitems1','helloitems2']
+                }
+            },
+            methods:{
+                add(){
+                    this.helloitems.push('helloitems'+this.helloitems.length);
+                }
+            }
+        }
+        Vue.createApp(App).mount('#app');
+    </script>
+</body>
+</html>

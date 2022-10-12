@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Vue.js起步-条件渲染</title>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>条件渲染</legend>
+            <!--v-if属性，为true则渲染组件，false则不渲染-->
+            <p v-if="isShow">子组件</p>
+            <button @click="isShow=!isShow">Click</button>
+        </fieldset>
+    </div>
+    <script>
+        const App = {
+            data() {
+                return {
+                    isShow: true
+                }
+            }
+        }
+        Vue.createApp(App).mount('#app');
+
+    </script>
+</body>
+
+</html>

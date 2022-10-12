@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Vue.js起步-双向绑定</title>
+</head>
+<body>
+   <div id="app">
+   <fieldset>
+     <legend>双向绑定</legend>
+     <!--双向绑定指，可以从组件上修改数据，也可以通过修改数据改变组件上显示的数据-->
+     <input type="text" v-model="search">
+     {{search}}
+   </fieldset>
+   </div> 
+</body>
+<script>
+    const App={
+        data(){
+            return {
+                search:"Vue"
+            }
+        }
+    }
+    Vue.createApp(App).mount('#app');
+</script>
+</html>
