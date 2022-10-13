@@ -11,13 +11,17 @@
     <script>
         function observe(data)
         {
-            //判断传入参数是否为空，且data
+            //判断传入参数data是否为空，且data类型是否为object
             if(!data||typeof data !=="object") return;
+        
             for(var key in data)
             {
+                //将传入参数data的属性赋予val
                 let val=data[key];
                 Object.defineProperty(data,key,{
+                    //可枚举
                     enumerable:true,
+                    //可配置
                     configurable:true,
                     get:function()
                     {
@@ -30,6 +34,7 @@
                       val=newVal;
                     }
                 })
+                //判断val类型是否为object，这么做是考虑到data的属性也可以为object，那么为了完全遍历这些不知道嵌套多少层的属性，使用递归进行遍历
                 if(typeof val==="object")
                 {
                     observe(val);
