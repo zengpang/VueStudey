@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>watch实现异步方法调用</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="name">
+        <span>{{text}}</span>
+
+        <p>{{result}}</p>
+    </div>
+    <script>
+        //延迟处理
+        const delayerls=()=>new Promise(r=>setTimeout(r,1000));
+        const vm=Vue.createApp({
+            data(){
+                return {
+                    //property
+                    name:''
+                }
+            },
+            computed:{
+                //返回值为promise，所以无效，则计算属性不能异步
+                async result(){
+                     let result=await delayerls();
+                     return result;
+                }
+            },
+            //watch会监控data中某个property的变化
+            /**
+             什么时候需要用watch
+             当只需要根据data中某个property的变化做出反应，但不一定需要结果时
+             当有异步操作时
+             当需要用旧值时
+             ps:如果要用到旧值，则格式为函数名(new属性名,old属性名)
+             */          
+            // watch:{
+            //  async name(newname,oldname){
+            //     await delayerls()
+            //     console.log(oldname+'-->'+newname);
+            //  }
+            // }
+        }).mount('#app');
+    </script>
+</body>
+</html>

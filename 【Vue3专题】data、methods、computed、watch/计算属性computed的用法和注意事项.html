@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>计算属性computed的用法和注意事项</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{name}} published {{count}} books:{{count2}} {{count3}}</p>
+        <button @click="add">Add book</button>
+    </div>
+    <script>
+        // 计算属性中依赖data中的属性的函数，当该属性发生改变时自动触发该依赖函数的变化
+       const vm= Vue.createApp({
+            data(){
+                return {
+                    name:'John Doe',
+                    books:['book1']
+                }
+            },
+            methods:{
+                add(){
+                    this.books.push('book');
+                }
+            },
+            computed:{
+                //注意事项
+                /*
+                 计算属性有缓存机制，如果依赖的数据未发生改变，则不会重新计算而是直接使用缓存值
+                 注意methods和computed里面的方法不要使用箭头函数，否则this就不是vm对象了                  
+                */
+
+                count(){
+                    console.log("count调用");
+                    return this.books.length;
+                },
+                count2(){
+                    console.log("count2调用");
+                },
+                count3(){
+                    console.log("count3调用"+this.books.length);
+                },
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>数据响应式</title>
+</head>
+<body>
+    <script>
+        /**
+         要点
+         追踪数据的变化，在读取数据或者设置数据时能劫持做一些操作
+         使用Object.defineProperty
+         使用Proxy
+         */
+        var obj={};
+        var age;
+        Object.defineProperty(obj,'age',{
+            get:function(){
+                console.log('get age...');
+                return age;
+            },
+            set:function(val)
+            {
+                console.log('set age...');
+                age=val;
+            }
+        })
+        obj.age=100;//触发set输出set age...
+        console.log(obj.age);//触发get输出get age...
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Object.defineProperty实现响应式</title>
+</head>
+<body>
+    <script>
+        function observe(data)
+        {
+            //判断传入参数是否为空，且data
+            if(!data||typeof data !=="object") return;
+            for(var key in data)
+            {
+                let val=data[key];
+                Object.defineProperty(data,key,{
+                    enumerable:true,
+                    configurable:true,
+                    get:function()
+                    {
+                        track(data,key);
+                        return val;
+                    },
+                    set:function(newVal)
+                    {
+                      trigger(data,key,newVal);
+                      val=newVal;
+                    }
+                })
+                if(typeof val==="object")
+                {
+                    observe(val);
+                }
+            }
+        }
+        //获取数据处理函数
+        function track(data,key)
+        {
+         //打印key值
+         console.log('get data ',key);
+        }
+        //设置数据处理函数
+        function trigger(data,key,value)
+        {
+          //打印key值与value值
+          console.log('set data',key,":",value);
+        }
+        var data={
+            name:'hunger',
+            friends:[1,2,3]
+        }
+        observe(data);
+        console.log(data.name);
+        data.name='valley';
+        data.friends[0]=4;
+        //data.friends[3]与data.age都是data中不存在的，所以是非响应式
+        data.friends[3]=5//非响应式
+        data.age=6;//非响应式
+    </script>
+</body>
+</html>

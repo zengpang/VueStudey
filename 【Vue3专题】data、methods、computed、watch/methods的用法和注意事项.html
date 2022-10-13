@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>methods的用法和注意事项</title>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>data和methods</legend>
+            {{counter}}<button @click="add">Click Me</button>
+        </fieldset>
+    </div>
+    <script>
+        const App = {
+            data() {
+                return {
+                    counter: 0
+                }
+            },
+            methods: {
+                /**
+                 methods
+                 里面包含的函数不推荐使用箭头函数，因为会导致this值错误
+                 */
+                add() {
+                    this.counter++;
+                }
+            }
+        }
+        Vue.createApp(App).mount('#app');
+
+    </script>
+</body>
+
+</html>

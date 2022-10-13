@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>methods和computed的区别</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{name}} published {{books.length}} books:{{count2}} {{count3}}</p>
+        <button @click="add">Add book</button>
+    </div>
+    <script>
+        // 虽然调用methods中的函数也能实现同样的效果,但总体不如计算属性，因为这样调用，会导致data中的属性一被调用就会触发该函数，无论属性是否变化
+       const vm= Vue.createApp({
+            data(){
+                return {
+                    name:'John Doe',
+                    books:['book1']
+                }
+            },
+            methods:{
+                add(){
+                    this.books.push('book');
+                },
+                count(){
+                    console.log("count调用");
+                    return this.books.length;
+                },
+            },
+            computed:{
+                count2(){
+                    console.log("count2调用");
+                },
+                count3(){
+                    console.log("count3调用"+this.books.length);
+                },
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

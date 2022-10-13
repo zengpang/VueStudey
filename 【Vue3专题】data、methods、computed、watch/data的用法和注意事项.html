@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>data的用法和注意事项</title>
+</head>
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>data和methods</legend>
+            {{counter}}<button @click="add">Click Me</button>
+        </fieldset>
+    </div>
+    <script>
+        const App={
+            data(){
+                return{
+                    //property
+                    counter:0
+                }
+            },
+            methods:{
+                /**
+                 里面包含的函数不推荐使用箭头函数，因为会导致this值错误
+                 */
+                add(){
+                    this.counter++
+                }
+            },
+        }
+        const vm=Vue.createApp(App).mount('#app');
+        /**
+        要点
+        1，data选项是一个函数，返回一个对象
+        2，对尚未提供所需值得property使用null
+        3，实例创建后再添加的property,响应式系统不会跟踪
+         */
+    </script>
+</body>
+</html>
