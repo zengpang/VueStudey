@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Proxy实现响应式</title>
+</head>
+
+<body>
+    <script>
+        //之所以只在getter中递归，是因为二级响应都是先调用get，比如proxy.obj.name=1。会先调用get，然后调用set，所以到set的时候就基本进行了响应式代理
+        //将对象中的所有属性进行响应式设置
+        function reactive(obj) {
+            const handle = {
+               //获取属性值
+               get(target,prop,receiver)
+               {
+                console.log("触发get");
+                track(target,prop);
+                const value=Reflect.get(...arguments);
+
+                //此段逻辑的目的是为了将可能存在的对象类型属性也进行响应式设置
+                //判断属性类型是否为对象类型
+                if(typeof value==="object")
+                {
+                    //如果是的继续调用reactive对对象类型属性进行响应性设置
+                    return reactive(value);
+                }
+                //否则返回属性值
+                else{
+                    return value;
+                }
+               },
+               //设置属性值
+               set(target,key,value,receiver)
+               {
+                  trigger(target,key,value);
+                  return Reflect.set(...arguments);
+               }
+
+            }
+            //Proxy(dinner,handle) 第一个参数是需对其进行响应式处理的对象，第二个参数是响应式数据处理对象
+            return new Proxy(obj,handle);
+        }
+        //获取数据处理函数
+        function track(data, key) {
+            console.log('get data', key);
+        }
+        //设置数据处理函数
+        function trigger(data, key, value) {
+            console.log('set data', key, ":", value);
+        }
+        const dinner = {
+            meal: 'tacos'
+        }
+        const proxy=reactive(dinner);
+        proxy.meal='apple';
+        //新增的属性也是响应式，也被代理了
+        proxy.list=[];
+        proxy.list.push(1);
+    </script>
+</body>
+
+</html>

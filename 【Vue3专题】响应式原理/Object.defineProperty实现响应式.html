@@ -9,25 +9,29 @@
 </head>
 <body>
     <script>
+        //设置对象中所有属性为响应式属性
         function observe(data)
         {
-            //判断传入参数data是否为空，且data类型是否为object
+            //判断传入参数data是否为空，且判断data类型是否为object
             if(!data||typeof data !=="object") return;
-        
+            //遍历data中的所有属性
             for(var key in data)
             {
                 //将传入参数data的属性赋予val
                 let val=data[key];
+                //修改属性
                 Object.defineProperty(data,key,{
-                    //可枚举
+                    //可枚举，使该属性能被for..in循环，Object.keys方法，JSON.stringify方法获取到,即属性能被遍历(枚举)
                     enumerable:true,
-                    //可配置
+                    //可配置，configurable表示能否通过 delete 删除属性、能否修改属性的特性，或者将属性修改为数据属性
                     configurable:true,
+                    //获取属性值
                     get:function()
                     {
                         track(data,key);
                         return val;
                     },
+                    //设置属性值
                     set:function(newVal)
                     {
                       trigger(data,key,newVal);

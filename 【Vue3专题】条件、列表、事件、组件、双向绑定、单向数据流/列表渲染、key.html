@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>列表渲染、key</title>
+</head>
+<body>
+    <div id="app">
+        <li v-for="item in array">{{item}}</li>
+        <!--v-for属性格式2为(元素变量名,元素序号变量名) in 数组-->
+        <div v-for="(item,index) in items">
+            <child></child>
+            <button @click="remove(index)"></button>
+        </div>
+        <button @click=add>add</button>
+    </div>
+    <script>
+        const app=Vue.createApp({
+            data(){
+                return {items:[]}
+            },
+            methods:{
+              remove(index){this.items.splice(index,1)},
+              add(){this.items.push({id:Math.random()})}
+            }
+        })
+        //添加自定义组件
+        app.component('child',{
+            data(){
+                return {counter:Math.random()}
+            },
+            template:'<span>{{counter}}</span>'
+        })
+        app.mount('#app');
+    </script>
+</body>
+</html>

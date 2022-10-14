@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>v-if和v-show的区别</title>
+</head>
+<body>
+    
+    <div id="app">
+      <button @click="isShow=!isShow">Toggle</button>
+      <p v-if="isShow">v-if content</p>
+      <p v-show="isShow">v-show content</p>
+      <child v-if="isShow" title="v-if"></child>
+      <child v-show="isShow" title="v-show"></child>
+    </div>
+    <script>
+        /**
+         要点
+         v-if切换回创建/删除元素,v-show切换只是元素的展示/隐藏(display:none)
+         v-if切换回创建/销毁组件,v-show切换在创建完组件后只会隐藏（display:none）
+         对于多个元素的控制可以用<template>包裹
+         */
+        const app=Vue.createApp({
+            data(){
+                return{isShow:true}
+            }
+        })
+        app.component('child',{
+            props:['title'],
+            //html模板
+            template:'<div>component {{title}}</div>',
+            created(){
+                console.log('child created',this.title);
+            },
+            unmounted(){
+                console.log('child unmounted',this.title);
+            }
+        })
+        app.mount('#app');
+    </script>
+</body>
+</html>
