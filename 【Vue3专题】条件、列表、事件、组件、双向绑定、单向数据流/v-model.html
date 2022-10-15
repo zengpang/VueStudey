@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>v-model</title>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>value和input</legend>
+            <!-- value 和 input -->
+            <input v-model="message" />{{message}}
+        </fieldset>
+        <fieldset>
+            <legend>value和change</legend>
+            <!-- value 和 change -->
+            <!-- v-model.lazy属性表示该组件只有在失焦之后才会更新数据 -->
+            <textarea v-model.lazy="message"></textarea>{{message}}
+        </fieldset>
+        <fieldset>
+            <legend>复选框</legend>
+            <input type="checkbox" v-model="checked" />{{checked}}
+        </fieldset>
+        <fieldset>
+            <legend>多个复选框</legend>
+            <!--复选框-->
+            <input type="checkbox" value="a" v-model="list" />
+            <input type="checkbox" value="b" v-model="list" />{{list}}
+        </fieldset>
+        <fieldset>
+            <legend>单选框</legend>
+            <!--单选框-->
+            <input type="radio" value="a" v-model="theme" />
+            <input type="radio" value="b" v-model="theme" />{{theme}}
+        </fieldset>
+      
+        <fieldset>
+            <legend>select</legend>
+            <!--select-->
+            <select v-model="selected">
+                <option value="AA">A</option>
+                <option value="BB">B</option>
+                <option value="CC">C</option>
+            </select>
+            {{selected}}
+        </fieldset>
+    </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    message: 'aa',
+                    checked: false,
+                    list: [],
+                    theme: '',
+                    selected: []
+                }
+
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

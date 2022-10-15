@@ -9,21 +9,35 @@
 </head>
 <body>
     <div id="app">
-        <li v-for="item in array">{{item}}</li>
+    
         <!--v-for属性格式2为(元素变量名,元素序号变量名) in 数组-->
-        <div v-for="(item,index) in items">
+    
+        <div v-for="(item,index) in items" :key="item.id">
             <child></child>
-            <button @click="remove(index)"></button>
+            <button @click="remove(index)">删除</button>
         </div>
         <button @click=add>add</button>
     </div>
     <script>
+        /**
+         要点
+         v-for可基于数组渲染列表
+         也可基于对象渲染列表
+         可以使用值的范围
+         可在组件上循环渲染
+         v-for默认使用"就地更新"策略，数据项的顺序被改变，Vue将不会移动DOM元素来匹配数据项的
+         顺序，而是就地更新每个元素
+         为能跟踪每个节点的身份，重用和重新排序现有元素，提升性能，需要使用key，即:key属性
+         */
         const app=Vue.createApp({
             data(){
                 return {items:[]}
             },
             methods:{
-              remove(index){this.items.splice(index,1)},
+              remove(index){ 
+                
+                this.items.splice(index,1)
+            },
               add(){this.items.push({id:Math.random()})}
             }
         })

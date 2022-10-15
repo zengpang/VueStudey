@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>事件处理</title>
+</head>
+
+<body>
+    <div id="app">
+        <!--点击事件属性标准格式-->
+        <button v-on:click="sayHello">click</button>
+         <!--点击事件属性为函数名，该函数传入参数默认为event-->
+        <button @click="sayHello">click</button>
+        <!--点击事件属性为函数，且传入参数为实参，那么就调用函数并把实参传入到该函数中-->
+        <button @click="sayHello('hunger')">click</button>
+        <!--点击事件属性支持多个函数，当点击时候触发所有函数，且点击事件函数传入$event，表示传入event-->
+        <button @click="sayHello($event),sayHi('hunger')">click</button>
+        <!--点击事件属性为函数，且函数传入参数为形参，则形参会自动读取元素组件中与形参同名的属性值，如果无该属性则传入的形参值默认为空值-->
+        <button @click.once="sayHello(name)">click</button>
+        <!--点击事件属性为函数名，参数默认为event-->
+        <button @click.stop="sayHello">click</button>
+    </div>
+    
+    <script>
+        /**
+         @click的值即可以是methods里的函数名，执行函数时参数是点击事件
+         也可以是函数的调用，执行函数时参数是调用时传递的参数，可以传递固定值，可传递data的属性，
+         也可传递$event
+         */
+        Vue.createApp({
+            data() {
+                return { name: 'hunger' }
+            },
+            methods: {
+                sayHello(arg) { console.log(arg) },
+                sayHi(arg) { console.log(arg) }
+            },
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
