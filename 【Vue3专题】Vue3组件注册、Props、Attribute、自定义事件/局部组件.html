@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>局部组件</title>
+</head>
+<body>
+    <div id="app">
+        <component-a></component-a>   
+    </div>
+    <script>
+        //局部组件只能在使用该组件的组件内使用
+        const ComponentB={
+            template:`<div>ComponentB</div>`
+        }
+        const ComponentA={
+            //需要在components中引用
+            components:{
+              ComponentB
+            },
+            template:`
+            <div>ComponentA</div>
+            <component-b></component-b>
+            `
+        }
+        const App={
+            components:{ComponentA}
+        }
+        Vue.createApp(App).mount(`#app`);
+    </script>
+</body>
+</html>
