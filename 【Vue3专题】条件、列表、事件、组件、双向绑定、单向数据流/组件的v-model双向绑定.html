@@ -4,43 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@next"></script>
     <title>组件的v-model双向绑定</title>
 </head>
 <body>
     <div id="app">
-      <font-size step="1" :val="fontSize" @plus="fontSize +=$event" @minus="fontSize -=$event"></font-size>
-      <font-size step="3" :val="fontSize" @plus="fontSize +=$event" @minus="fontSize -=$event"></font-size>
+      <font-size step="1" v-model="fontSize"></font-size>
+      <font-size step="3" v-model="fontSize"></font-size>
       <p :style="{fontSize:fontSize+'px'}">Hello {{fontSize}}</p>
     </div>
 </body>
 <script>
     /**
      要点
-     每个组件维护独立的数据
-     app.component('组件名',{}) 注册组件
-     通过Prop向子组件传递数据，子组件触发事件来实现子传父 
+     父组件通过v-model="属性"把属性传递给子组件
+     子组件内有一个modelValue的Prop，接受父组件传递的数据。
+     子组件通过触发 update:modelValue修改父组件绑定的属性
      */
     const app=Vue.createApp({
         data(){return{fontSize:16}}
     })
     app.component('font-size',{
-        props:['val','step'],
+        props:['modelValue','step'],
         template:`<div>
-            step:{{step}}
-            <button @click="onPlus">+</button>
-            <button @click="$emit('minus',step)">-</button>
+            fontSize:{{modelValue}}
+            <button @click="$emit('update:modelValue',+step+modelValue)">+</button>
+            <button @click="$emit('update:modelValue',modelValue-step)">-</button>
             </div>`,
-        methods:{
-            onPlus(){
-                //
-                /**
-                 * 由于这里的this指的是vm
-                 * 所以可以使用this代替
-                 1,vm.$emit(eventName,[...args])可以有两个参数；第一个参数必填，触发当前实例上的函数;第二个参数选填，是向函数传递的数据
-                 */
-                this.$emit('plus',parseInt(this.step))
-            }
-        }
+        
     });
     app.mount('#app');
 </script>
